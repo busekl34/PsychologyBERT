@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Yapay Zeka Destekli Psikolojik Asistan</title>
+<style>
+  :root {
+    --soft-green: #D6EFD6;
+    --light-green: #E9F5E9;
+    --medium-green: #82B366;
+    --dark-green: #4B774B;
+    --text-color: #2F4F2F;
+    --shadow-color: rgba(130, 179, 102, 0.3);
+    --button-hover: #A3D9A5;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    background-color: var(--light-green);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text-color);
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+  }
+
+  .phone-frame {
+    width: 420px;
+    max-height: 1200px;
+    background: white;
+    border-radius: 40px;
+    box-shadow: 0 15px 30px var(--shadow-color);
+    padding: 25px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+  }
+
+  .phone-notch {
+    width: 140px;
+    height: 30px;
+    background: var(--medium-green);
+    border-radius: 15px 15px 0 0;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+  }
+
+  h1 {
+    margin-top: 60px;
+    margin-bottom: 15px;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--dark-green);
+    text-align: center;
+  }
+
+  /* Görsel galerisi */
+  .gallery {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    width: 100%;
+    padding-bottom: 10px;
+  }
+
+  .gallery img {
+    width: 90px;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(130,179,102,0.3);
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    flex-shrink: 0;
+  }
+
+  .gallery img:hover,
+  .gallery img.active {
+    transform: scale(1.1);
+    box-shadow: 0 8px 16px var(--medium-green);
+  }
+
+  /* Büyük gösterim alanı */
+  .main-illustration {
+    width: 220px;
+    height: auto;
+    border-radius: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 12px 24px var(--shadow-color);
+  }
+
+  form {
+    width: 100%;
+  }
+
+  textarea, input[type="text"] {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border: 2px solid var(--soft-green);
+    border-radius: 12px;
+    font-size: 1rem;
+    font-family: inherit;
+    color: var(--text-color);
+    resize: vertical;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  textarea:focus, input[type="text"]:focus {
+    border-color: var(--medium-green);
+    box-shadow: 0 0 8px var(--medium-green);
+    outline: none;
+  }
+
+  button {
+    width: 100%;
+    background-color: var(--medium-green);
+    color: white;
+    border: none;
+    padding: 14px 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+
+  button:hover {
+    background-color: var(--button-hover);
+    color: var(--dark-green);
+  }
+
+  .results {
+    margin-top: 25px;
+    background-color: var(--soft-green);
+    padding: 15px 20px;
+    border-radius: 15px;
+    box-shadow: inset 0 0 8px var(--shadow-color);
+    color: var(--dark-green);
+    font-size: 1rem;
+    text-align: left;
+    max-height: 800px;
+    overflow-y: auto;
+  }
+
+  .results h2 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--medium-green);
+  }
+
+  ul {
+    padding-left: 1.3rem;
+    margin: 0;
+  }
+
+  ul li {
+    margin-bottom: 5px;
+  }
+</style>
+</head>
+<body>
+
+<div class="phone-frame">
+  <div class="phone-notch"></div>
+
+  <h1>🧠 ❤️‍🩹Yapay Zekâ Destekli Psikolojik Danışmanlık 🧘💬 </h1>
+
+  <!-- Büyük görsel -->
+  <img id="mainImage" src="{{ url_for('static', filename='images/5d73851c7a6dfa0d4c1e8297_plant.svg') }}" alt="Ana Görsel" class="main-illustration" />
+
+  <!-- Küçük görseller galerisi -->
+  <div class="gallery">
+    <img src="{{ url_for('static', filename='images/loving.svg') }}" alt="Görsel 1" class="active" onclick="changeImage(this)" />
+    <img src="{{ url_for('static', filename='images/5d5e3081aa3dfe9d81a5665a_dancing.svg') }}" alt="Görsel 2" onclick="changeImage(this)" />
+    <img src="{{ url_for('static', filename='images/meditating.svg') }}" alt="Görsel 3" onclick="changeImage(this)" />
+  </div>
+
+  <form method="POST">
+    <textarea name="sikayet" rows="5" placeholder="Merhaba! Burada duygularınızı ve yaşadığınız zorlukları paylaşabilir, size uygun destek mesajları alabilirsiniz. Unutmayın, her karanlığın ardından aydınlık gelir ve yalnız değilsiniz💚" required>{{ sikayet or '' }}</textarea>
+    <button type="submit">Analiz Et 💡</button>
+  </form>
+
+  {% if kategori and mesaj %}
+  <div class="results">
+    <h2>Sonuçlar</h2>
+    <p><strong>🩺 Tahmini Kategori:</strong> {{ kategori }}</p>
+    <p><strong>💡 Destek Mesajı:</strong> {{ mesaj }}</p>
+  </div>
+  {% endif %}
+</div>
+
+<script>
+  function changeImage(element) {
+    // Ana görseli değiştir
+    document.getElementById('mainImage').src = element.src;
+    // Aktif sınıfı güncelle
+    document.querySelectorAll('.gallery img').forEach(img => img.classList.remove('active'));
+    element.classList.add('active');
+  }
+</script>
+
+</body>
+</html>
